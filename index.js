@@ -9,9 +9,15 @@ function getDogImage(numberPics) {
 }
 
 function displayResults(responseJson) {
-  console.log(responseJson);
-  responseJson.message.forEach(image => console.log(image));
-  //Add foreach/forloop that adds each image into DOM
+    console.log(responseJson);
+    const numOfPics = responseJson.message.length;
+    $('.results').remove();
+    $('form').after('<section class="results"></section>')
+    for (let i=0; i < numOfPics; i++){
+        let currentImg = responseJson.message[i];
+        console.log(currentImg);
+        $('.results').append(`<img src=${currentImg}></img>`);
+    }
 }
 
 function watchForm() {
@@ -26,7 +32,6 @@ function watchForm() {
     }else{
     	console.log("Incorrect number");
     }
-    
   });
 }
 
