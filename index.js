@@ -1,15 +1,16 @@
 'use strict';
 
-function getDogImage() {
-  fetch('https://dog.ceo/api/breeds/image/random') //update fetch to handle multiple//
+function getDogImage(numberPics) {
+  fetch('https://dog.ceo/api/breed/hound/images/random/' + numberPics) //update fetch to handle multiple//
     .then(response => response.json())
     .then(responseJson => 
       displayResults(responseJson))
-    .catch(error => alert('Something went wrong. Try again later.'));
+    .catch(error => console.log('Something went wrong. Try again later.'));
 }
 
 function displayResults(responseJson) {
   console.log(responseJson);
+  responseJson.message.forEach(image => console.log(image));
   //Add foreach/forloop that adds each image into DOM
 }
 
@@ -19,7 +20,13 @@ function watchForm() {
     //Get value of input
     //Ensure value is a number 1-50
         //log error if not
-    getDogImage();
+    const numberPics = parseInt($('.numberPics').val());
+    if (numberPics > 0 && numberPics < 51){
+		getDogImage(numberPics);
+    }else{
+    	console.log("Incorrect number");
+    }
+    
   });
 }
 
