@@ -1,7 +1,7 @@
 'use strict';
 
-function getDogImage(numberPics) {
-  fetch('https://dog.ceo/api/breed/hound/images/random/' + numberPics) //update fetch to handle multiple//
+function getDogImage(numberPics, breed) {
+  fetch('https://dog.ceo/api/breed/'+breed+'/images/random/' + numberPics) //update fetch to handle multiple//
     .then(response => response.json())
     .then(responseJson => 
       displayResults(responseJson))
@@ -12,12 +12,17 @@ function displayResults(responseJson) {
     console.log(responseJson);
     const numOfPics = responseJson.message.length;
     $('.results').remove();
-    $('.user-input').after('<section class="results"></section>')
-    for (let i=0; i < numOfPics; i++){
-        let currentImg = responseJson.message[i];
-        console.log(currentImg);
-        $('.results').append(`<img src=${currentImg}></img>`);
+    $('.user-input').after('<section class="results"></section>');
+    if (responseJson.status === 'success'){
+    	for (let i=0; i < numOfPics; i++){
+	        let currentImg = responseJson.message[i];
+	        console.log(currentImg);
+	        $('.results').append(`<img src=${currentImg}></img>`);
+	    }
+    }else{
+    	$('.results').append(`<h5>We can not find that breed</h5>`);
     }
+    
 }
 
 function clearResults() {
@@ -30,8 +35,9 @@ function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
     const numberPics = parseInt($('.numberPics').val());
+    const breed = $('.breed').val();
     if (numberPics > 0 && numberPics < 51){
-		getDogImage(numberPics);
+		getDogImage(numberPics, breed);
     }else{
     	console.log("Incorrect number");
     }
