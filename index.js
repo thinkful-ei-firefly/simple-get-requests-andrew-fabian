@@ -12,7 +12,7 @@ function displayResults(responseJson) {
     console.log(responseJson);
     const numOfPics = responseJson.message.length;
     $('.results').remove();
-    $('form').after('<section class="results"></section>')
+    $('.user-input').after('<section class="results"></section>')
     for (let i=0; i < numOfPics; i++){
         let currentImg = responseJson.message[i];
         console.log(currentImg);
@@ -20,12 +20,15 @@ function displayResults(responseJson) {
     }
 }
 
+function clearResults() {
+    $('.user-input').on('click', '#clear-results', function() {
+        $('.results').remove();
+    })
+}
+
 function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
-    //Get value of input
-    //Ensure value is a number 1-50
-        //log error if not
     const numberPics = parseInt($('.numberPics').val());
     if (numberPics > 0 && numberPics < 51){
 		getDogImage(numberPics);
@@ -38,4 +41,5 @@ function watchForm() {
 $(function() {
   console.log('App loaded! Waiting for submit!');
   watchForm();
+  clearResults();
 });
