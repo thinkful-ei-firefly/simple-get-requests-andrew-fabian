@@ -1,7 +1,7 @@
 'use strict';
 
 function getDogImage() {
-  fetch('https://dog.ceo/api/breeds/image/random')
+  fetch('https://dog.ceo/api/breeds/image/random') //update fetch to handle multiple//
     .then(response => response.json())
     .then(responseJson => 
       displayResults(responseJson))
@@ -10,17 +10,15 @@ function getDogImage() {
 
 function displayResults(responseJson) {
   console.log(responseJson);
-  //replace the existing image with the new one
-  $('.results-img').replaceWith(
-    `<img src="${responseJson.message}" class="results-img">`
-  )
-  //display the results section
-  $('.results').removeClass('hidden');
+  //Add foreach/forloop that adds each image into DOM
 }
 
 function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
+    //Get value of input
+    //Ensure value is a number 1-50
+        //log error if not
     getDogImage();
   });
 }
